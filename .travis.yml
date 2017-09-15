@@ -23,4 +23,4 @@ before_script:
   - mkdir -p $TMPDIR
 
 script:
-  - CONTAINER_OS=${CONTAINER%%:*} CONTAINER_TAG=${CONTAINER##*:} bash ./build_scripts/build_docker.sh
+  - CONTAINER_OS=${CONTAINER%%:*} CONTAINER_TAG=${CONTAINER##*:} bash ./build/build_docker.sh
