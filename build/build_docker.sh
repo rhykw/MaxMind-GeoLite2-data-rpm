@@ -25,4 +25,5 @@ echo "# wget version"
 echo "# --------------------"
 docker run -i --rm $TEST_CONTAINER wget --version
 
-
+docker run -i --rm $TEST_CONTAINER pwd
+docker run -i --rm $TEST_CONTAINER find -ls
