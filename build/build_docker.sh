@@ -5,6 +5,7 @@ TEST_DIR="$(cd "$(dirname "${BASH_SOURCE[0]:-${(%):-%N}}")"; pwd)"
 CONTAINER_OS="${CONTAINER_OS:-centos}"
 CONTAINER_TAG="${CONTAINER_TAG:-latest}"
 TEST_CONTAINER="$CONTAINER_OS:ttcopy_test"
+TEST_CONTAINER=${CONTAINER}
 DOCKER_FILE_PATH="$TEST_DIR/Dockerfile"
 cat $DOCKER_FILE_PATH \
     | sed "s/@@@TAG_NAME@@@/$CONTAINER_TAG/" \
