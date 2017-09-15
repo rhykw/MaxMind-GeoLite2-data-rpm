@@ -16,6 +16,12 @@ echo "# --------------------"
 cat $DOCKER_FILE_PATH \
     | sed "s/@@@TAG_NAME@@@/$CONTAINER_TAG/"
 echo
+
+
+docker image list
+docker container list -a
+
+
 _cmd="docker run -i --rm $TEST_CONTAINER uname -a"
 echo $_cmd
 $_cmd
