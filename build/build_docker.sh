@@ -1,5 +1,8 @@
 #!/bin/bash
 
+set -e
+set -x
+
 TEST_DIR="$(cd "$(dirname "${BASH_SOURCE[0]:-${(%):-%N}}")"; pwd)"
 
 CONTAINER_OS="${CONTAINER_OS:-centos}"
