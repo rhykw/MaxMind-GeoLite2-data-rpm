@@ -35,7 +35,9 @@ echo "# --------------------"
 docker run -i --rm $TEST_CONTAINER /usr/bin/wget --version
 
 docker run -i --rm $TEST_CONTAINER pwd
-docker run -i --rm $TEST_CONTAINER bash -c "cd rpmbuild/SOURCES && wget $(cat rpmbuild/SPECS/*.spec|awk '($1~"^Source"){print $2}')"
+for source in $(cat rpmbuild/SPECS/*.spec|awk '($1~"^Source"){print $2}');do
+    docker run -i --rm $TEST_CONTAINER bash -c "cd rpmbuild/SOURCES && wget $source"
+done
 for spec in rpmbuild/SPECS/*.spec;do
     docker run -i --rm $TEST_CONTAINER rpmbuild -ba $spec
 done
