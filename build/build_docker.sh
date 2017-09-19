@@ -11,6 +11,12 @@ TEST_CONTAINER="${CONTAINER_OS}:${CONTAINER_TAG}.builder"
 DOCKER_FILE_PATH="$TEST_DIR/Dockerfile"
 dockerfile=$(mktemp $(pwd)/Dockerfile.XXXXXXXX)
 
+
+for source in $(cat rpmbuild/SPECS/*.spec|awk '($1~"^Source"){print $2}');do
+  bash -c "cd rpmbuild/SOURCES && wget $source"
+done
+
+
 cat $DOCKER_FILE_PATH \
     | sed "s/@@@TAG_NAME@@@/$CONTAINER_TAG/" > $dockerfile
 docker build -t $TEST_CONTAINER -f $dockerfile .
@@ -35,9 +41,7 @@ echo "# --------------------"
 docker run -i --rm $TEST_CONTAINER /usr/bin/wget --version
 
 docker run -i --rm $TEST_CONTAINER pwd
-for source in $(cat rpmbuild/SPECS/*.spec|awk '($1~"^Source"){print $2}');do
-    docker run -i --rm $TEST_CONTAINER bash -c "cd rpmbuild/SOURCES && wget $source"
-done
+
 for spec in rpmbuild/SPECS/*.spec;do
     docker run -i --rm $TEST_CONTAINER rpmbuild -ba $spec
 done
