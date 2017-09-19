@@ -10,9 +10,9 @@ matrix:
         - os: linux
           services: docker
           env: CONTAINER=centos:7
-        - os: linux
-          services: docker
-          env: CONTAINER=centos:latest
+#        - os: linux
+#          services: docker
+#          env: CONTAINER=centos:latest
 
 before_install:
   - sudo apt-get -qq update
