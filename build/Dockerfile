@@ -8,7 +8,7 @@ USER mockbuild:mockbuild
 
 WORKDIR /home/mockbuild
 
-ADD ../rpmbuild rpmbuild
+ADD rpmbuild rpmbuild
 RUN mkdir -p rpmbuild/BUILD rpmbuild/BUILDROOT rpmbuild/RPMS rpmbuild/SOURCES rpmbuild/SPECS rpmbuild/SRPMS
 RUN chown -R mockbuild:mockbuild /home/mockbuild
 

@@ -4,7 +4,7 @@ TEST_DIR="$(cd "$(dirname "${BASH_SOURCE[0]:-${(%):-%N}}")"; pwd)"
 
 CONTAINER_OS="${CONTAINER_OS:-centos}"
 CONTAINER_TAG="${CONTAINER_TAG:-latest}"
-TEST_CONTAINER="${CONTAINER_OS}:ibuild_${CONTAINER_TAG}"
+TEST_CONTAINER="${CONTAINER_OS}:${CONTAINER_TAG}.builder"
 DOCKER_FILE_PATH="$TEST_DIR/Dockerfile"
 cat $DOCKER_FILE_PATH \
     | sed "s/@@@TAG_NAME@@@/$CONTAINER_TAG/" \
@@ -18,8 +18,8 @@ cat $DOCKER_FILE_PATH \
 echo
 
 
-docker image list
-docker container list -a
+#docker image list
+#docker container list -a
 
 
 _cmd="docker run -i --rm $TEST_CONTAINER uname -a"
