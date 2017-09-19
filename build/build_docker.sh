@@ -14,6 +14,7 @@ dockerfile=$(mktemp $(pwd)/Dockerfile.XXXXXXXX)
 
 sources=$(cat rpmbuild/SPECS/*.spec|awk '($1~"^Source"){print $2}')
 if [ ! -z "$sources" ]; then
+    mkdir -p rpmbuild/SOURCES
     ( cd rpmbuild/SOURCES && wget $sources )
 fi
 
