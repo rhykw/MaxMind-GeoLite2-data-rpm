@@ -12,9 +12,10 @@ DOCKER_FILE_PATH="$TEST_DIR/Dockerfile"
 dockerfile=$(mktemp $(pwd)/Dockerfile.XXXXXXXX)
 
 
-for source in $(cat rpmbuild/SPECS/*.spec|awk '($1~"^Source"){print $2}');do
-  bash -c "cd rpmbuild/SOURCES && wget $source"
-done
+sources=$(cat rpmbuild/SPECS/*.spec|awk '($1~"^Source"){print $2}')
+if [ ! -z "$sources" ]; then
+    ( cd rpmbuild/SOURCES && wget $sources )
+fi
 
 
 cat $DOCKER_FILE_PATH \
