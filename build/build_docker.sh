@@ -9,7 +9,7 @@ CONTAINER_OS="${CONTAINER_OS:-centos}"
 CONTAINER_TAG="${CONTAINER_TAG:-latest}"
 TEST_CONTAINER="${CONTAINER_OS}:${CONTAINER_TAG}.builder"
 DOCKER_FILE_PATH="$TEST_DIR/Dockerfile"
-dockerfile=$(mktemp)
+dockerfile=$(mktemp $(pwd)/Dockerfile.XXXXXXXX)
 
 cat $DOCKER_FILE_PATH \
     | sed "s/@@@TAG_NAME@@@/$CONTAINER_TAG/" > $dockerfile
