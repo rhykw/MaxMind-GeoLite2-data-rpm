@@ -13,7 +13,7 @@ dockerfile=$(mktemp)
 
 cat $DOCKER_FILE_PATH \
     | sed "s/@@@TAG_NAME@@@/$CONTAINER_TAG/" > $dockerfile
-docker build -t $TEST_CONTAINER -f $dockerfile
+docker build -t $TEST_CONTAINER -f $dockerfile .
 
 echo "# --------------------"
 echo "# Docker container info"
