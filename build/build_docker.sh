@@ -18,7 +18,7 @@ fi
 
 
 cat $DOCKER_FILE_PATH \
-    | sed "s/@@@CONTAINER/@@@/$CONTAINER/" > $dockerfile
+    | sed "s/@@@CONTAINER@@@/$CONTAINER/" > $dockerfile
 
 docker build -t $TEST_CONTAINER -f $dockerfile .
 
