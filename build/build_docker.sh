@@ -5,25 +5,24 @@ set -x
 
 TEST_DIR="$(cd "$(dirname "${BASH_SOURCE[0]:-${(%):-%N}}")"; pwd)"
 
-CONTAINER_OS="${CONTAINER_OS:-centos}"
-CONTAINER_TAG="${CONTAINER_TAG:-latest}"
-TEST_CONTAINER="${CONTAINER_OS}:${CONTAINER_TAG}.builder"
-DOCKER_FILE_PATH="$TEST_DIR/Dockerfile"
+TEST_CONTAINER="${CONTAINER}.builder"
+DOCKER_FILE_PATH="$TEST_DIR/Dockerfile.centos"
 dockerfile=$(mktemp $(pwd)/Dockerfile.XXXXXXXX)
 
 
-sources=$(cat rpmbuild/SPECS/*.spec|awk '($1~"^Source"){print $2}')
+mkdir -p rpmbuild/SOURCES
+sources=$(cat *.spec|awk '($1~"^Source"){print $2}')
 if [ ! -z "$sources" ]; then
-    mkdir -p rpmbuild/SOURCES
     ( cd rpmbuild/SOURCES && wget $sources )
 fi
 
 
 cat $DOCKER_FILE_PATH \
-    | sed "s/@@@TAG_NAME@@@/$CONTAINER_TAG/" > $dockerfile
-#docker build -t $TEST_CONTAINER -f $dockerfile .
+    | sed "s/@@@CONTAINER/@@@/$CONTAINER/" > $dockerfile
 
-cat $dockerfile | docker build -t $TEST_CONTAINER -f /dev/stdin .
+docker build -t $TEST_CONTAINER -f $dockerfile .
+
+# cat $dockerfile | docker build -t $TEST_CONTAINER -f /dev/stdin .
 
 
 echo "# --------------------"
@@ -43,10 +42,7 @@ $_cmd
 echo "# --------------------"
 echo "# wget version"
 echo "# --------------------"
-docker run -i --rm $TEST_CONTAINER /usr/bin/wget --version
 
-docker run -i --rm $TEST_CONTAINER pwd
-
-for spec in rpmbuild/SPECS/*.spec;do
-    docker run -i --rm $TEST_CONTAINER rpmbuild -ba $spec
+for spec in *.spec;do
+    docker run -i --rm $TEST_CONTAINER rpmbuild --define "__source_yyyy_mm=2018.05" -ba $spec
 done

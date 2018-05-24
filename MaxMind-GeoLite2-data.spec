@@ -1,7 +1,7 @@
 Name:		MaxMind-GeoLite2-data
 # The geolite databases are updated on the first Tuesday of each month,
 # hence we use a versioning scheme of YYYY.MM for the Fedora package
-Version:	2017.09
+Version:	%{_source_yyyy_mm}
 Release:	1%{?dist}
 Summary:	Free GeoLite2 IP geolocation country database
 # License specified at http://dev.maxmind.com/geoip/legacy/geolite/#License

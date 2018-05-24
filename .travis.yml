@@ -1,26 +1,20 @@
 language: generic
-
 sudo: required
 
 matrix:
-    include:
-        - os: linux
-          services: docker
-          env: CONTAINER=centos:6
-        - os: linux
-          services: docker
-          env: CONTAINER=centos:7
-#        - os: linux
-#          services: docker
-#          env: CONTAINER=centos:latest
+  include:
+    - os: linux
+      services: docker
+      env: CONTAINER=centos:6
+    - os: linux
+      services: docker
+      env: CONTAINER=centos:7
 
 before_install:
-  - sudo apt-get -qq update
-  - sudo apt-get install -y bash expect
+  - sudo apt-get -qq update && sudo apt-get install -y bash
 
 before_script:
-  - export TMPDIR=$TRAVIS_BUILD_DIR/tmp
-  - mkdir -p $TMPDIR
+  - export TMPDIR=$TRAVIS_BUILD_DIR/tmp && mkdir -p $TMPDIR
 
 script:
-  - sudo env CONTAINER_OS=${CONTAINER%%:*} CONTAINER_TAG=${CONTAINER##*:} bash ./build/build_docker.sh
+  - sudo bash ./build/build_docker.sh

@@ -1,0 +1,11 @@
+FROM @@@CONTAINER@@@
+
+RUN yum update -y && \
+    yum install -y curl wget openssl rpm-build gzip tar sudo
+RUN useradd -u 1000 mockbuild
+
+WORKDIR /home/mockbuild
+
+USER mockbuild:mockbuild
+RUN mkdir -p rpmbuild/BUILD rpmbuild/BUILDROOT rpmbuild/RPMS rpmbuild/SOURCES rpmbuild/SPECS rpmbuild/SRPMS
+ADD . .
